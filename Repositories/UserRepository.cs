@@ -15,10 +15,10 @@ namespace ASP.NETTask.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-                using (var cmd = new SqlCommand("SET IDENTITY_INSERT Users ON;", connection))
+                await connection.OpenAsync();
+                using (var cmd = new SqlCommand("SET IDENTITY_INSERT Users OFF;", connection))
                 {
-                    cmd.ExecuteNonQuery();
+                    await cmd.ExecuteNonQueryAsync();
                 }
                 foreach (var user in users)
                 {
@@ -27,6 +27,7 @@ namespace ASP.NETTask.Repositories
                         "UPDATE Users " +
                         "SET Name=@Name, Username=@Username, Password=@Password, Email=@Email, Phone=@Phone, " +
                         "Website=@Website, Note=@Note, IsActive=@IsActive, CreatedAt=@CreatedAt " +
+                        "WHERE Id=@Id " +
                         "END " +
                         "ELSE " +
                         "BEGIN " +
@@ -76,6 +77,10 @@ namespace ASP.NETTask.Repositories
                         cmd.Parameters.AddWithValue("@UserId", user.Id);
                         await cmd.ExecuteNonQueryAsync();
                     }
+                }
+                using (var cmd = new SqlCommand("SET IDENTITY_INSERT Users ON;", connection))
+                {
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
         }
