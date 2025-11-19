@@ -1,5 +1,6 @@
 ﻿@model List<ASP.NETTask.Models.UserViewModel>
 
+    
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -26,28 +27,45 @@
         </tr>
     </thead>
     <tbody>
+        <form action="/user/save" method="post">
 @for(int i=0; i< Model.Count; i++)
 {
 	var user = Model[i];
     var address = user.Address;
     <tr>
         <td>@(i+1)</td>
+        <input type="hidden" name="Users[@i].Id" value="@user.Id"/>
         <td>@user.Name</td>
+        <input type="hidden" name="Users[@i].Name" value="@user.Name"/>
         <td>@user.Username</td>
+        <input type="hidden" name="Users[@i].Username" value="@user.Username"/>
         <td>@user.Email</td>
-        <td><input type="password" required value="@user.Password"></td>
+        <input type="hidden" name="Users[@i].Email" value="@user.Email"/>
+        <td><input name="Users[@i].Password" type="password" required value="@user.Password" ></td>
         <td>@user.Phone</td>
+        <input type="hidden" name="Users[@i].Phone" value="@user.Phone"/>
         <td>@user.Website</td>
-        <td><textarea maxlength="200" >@user.Note</textarea></td>
+        <input type="hidden" name="Users[@i].Website" value="@user.Website"/>
+        <td><textarea name="Users[@i].Note">@user.Note</textarea></td>
         <td class="thick-right"><input type="checkbox" @(user.IsActive ? "checked" : "")></td>
         <td>@address.Street</td>
+        <input type="hidden" name="Users[@i].Address.Street" value="@address.Street"/>
         <td>@address.Suite</td>
+        <input type="hidden" name="Users[@i].Address.Suite" value="@address.Suite"/>
         <td>@address.City</td>
+        <input type="hidden" name="Users[@i].Address.City" value="@address.City"/>
         <td>@address.Zipcode</td>
+        <input type="hidden" name="Users[@i].Address.Zipcode" value="@address.Zipcode"/>
         <td>@address.Lat</td>
+        <input type="hidden" name="Users[@i].Address.Lat" value="@address.Lat"/>
         <td>@address.Lng</td>
+        <input type="hidden" name="Users[@i].Address.Lng" value="@address.Lng"/>
+        <input type="hidden" name="Users[@i].Address.UserId" value="@user.Id"/>
+
     </tr>
 }
+<input type="submit" name="name" value="Save" />
+        </form>
     </tbody>
 </table>
 

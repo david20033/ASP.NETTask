@@ -44,9 +44,9 @@ namespace ASP.NETTask.Repositories
                         cmd.Parameters.AddWithValue("@Email", user.Email);
                         cmd.Parameters.AddWithValue("@Phone", user.Phone);
                         cmd.Parameters.AddWithValue("@Website", user.Website);
-                        cmd.Parameters.AddWithValue("@Note", user.Note);
+                        cmd.Parameters.AddWithValue("@Note", user.Note ?? "");
                         cmd.Parameters.AddWithValue("@IsActive", user.IsActive);
-                        cmd.Parameters.AddWithValue("@CreatedAt", user.CreatedAt);
+                        cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
 
                         await cmd.ExecuteNonQueryAsync();
                     }

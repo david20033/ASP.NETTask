@@ -23,30 +23,36 @@ namespace ASP.NETTask.Controllers
         {
             return View();
         }
-        public IActionResult All(List<UserViewModel> users)
-        {
-            return View(users);
-        }
         [HttpPost]
-        public async Task<IActionResult> Load()
+        public async Task<IActionResult> All()
         {
             try
             {
                 var usersList = await _apiService.GetUsersAsync();
                 var model = _userService.MapUsersToListViewModel(usersList);
-                return View("All", model);
+                return View(model);
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching users from external API.");
                 Console.WriteLine($"Error fetching users: {ex.Message}");
                 return StatusCode(500, "Error fetching users from external API.");
             }
         }
+        [HttpPost]
         public async Task<IActionResult> Save(List<User> users)
         {
-            await _userRepository.InsertUsers(users);
-            return Ok();
+            try
+            {
+                await _userRepository.InsertUsers(users);
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error saving users to the database.");
+                Console.WriteLine($"Error saving users: {ex.Message}");
+                return StatusCode(500, "Error saving users to the database.");
+            }
         }
     }
 }
