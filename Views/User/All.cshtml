@@ -1,0 +1,53 @@
+﻿@model List<ASP.NETTask.Models.UserViewModel>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th colspan="8" class="text-center thick-right">User</th>
+            <th colspan="6" class="text-center">Address</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Website</th>
+            <th scope="col">Note</th>
+            <th scope="col" class="thick-right">Is Active</th>
+            <th scope="col">Street</th>
+            <th scope="col">Suite</th>
+            <th scope="col">City</th>
+            <th scope="col">Zipcode</th>
+            <th scope="col">Lat</th>
+            <th scope="col">Lng</th>
+        </tr>
+    </thead>
+    <tbody>
+@for(int i=0; i< Model.Count; i++)
+{
+	var user = Model[i];
+    var address = user.Address;
+    <tr>
+        <td>@(i+1)</td>
+        <td>@user.Name</td>
+        <td>@user.Username</td>
+        <td>@user.Email</td>
+        <td><input type="password" required value="@user.Password"></td>
+        <td>@user.Phone</td>
+        <td>@user.Website</td>
+        <td><textarea maxlength="200" >@user.Note</textarea></td>
+        <td class="thick-right"><input type="checkbox" @(user.IsActive ? "checked" : "")></td>
+        <td>@address.Street</td>
+        <td>@address.Suite</td>
+        <td>@address.City</td>
+        <td>@address.Zipcode</td>
+        <td>@address.Lat</td>
+        <td>@address.Lng</td>
+    </tr>
+}
+    </tbody>
+</table>
+
