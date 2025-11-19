@@ -28,6 +28,6 @@ namespace ASP.NETTask.Models
         public string Note { get; set; } = string.Empty;
         public byte IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<Address> Addresses { get; set; } = new List<Address>();
+        public Address? Address { get; set; }
     }
 }

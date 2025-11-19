@@ -1,4 +1,5 @@
 using ASP.NETTask.Data;
+using ASP.NETTask.Repositories;
 using ASP.NETTask.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,10 @@ var connectionString =
         ?? throw new InvalidOperationException("Connection string not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+builder.Services.AddScoped<UserRepository>(sp =>
+{
+    return new UserRepository(connectionString);
+});
 
 var app = builder.Build();
 
